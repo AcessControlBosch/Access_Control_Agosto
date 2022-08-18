@@ -133,7 +133,7 @@ class typeAssocienteAPI(APIView):
     def delete(self, request, pk=""):
 
         typeAssocienteResults = typeAssociente.objects.get(id=pk)       
-        typeAssociente.delete()
+        typeAssocienteResults.delete()
         return Response({"msg": "Apagado com sucesso"})
 
 class AssociateAPI(APIView):
@@ -152,22 +152,22 @@ class AssociateAPI(APIView):
 
     def post(self, request):
 
-        serializer = AssocienteTable(data=request.data, many=True)
+        serializer = AssociateTable(data=request.data, many=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()        
         return Response({"msg": "Inserido com sucesso"})
     
     def put(self, request, pk=''):
 
-        AssocienteResults = Associente.objects.get(id=pk)
-        serializer = AssocienteTable(AssocienteResults, data=request.data)
+        AssocienteResults = Associate.objects.get(id=pk)
+        serializer = AssociateTable(AssocienteResults, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
     
     def delete(self, request, pk=''):
 
-        AssocienteResults = Associente.objects.get(id=pk)       
+        AssocienteResults = Associate.objects.get(id=pk)       
         AssocienteResults.delete()
         return Response({"msg": "Apagado com sucesso"})
 
@@ -206,8 +206,6 @@ class MachineAPI(APIView):
         machineResult = Machine.objects.get(id=pk)       
         machineResult.delete()
         return Response({"msg": "Apagado com sucesso"})
-
-
 
 class QuestionAPI(APIView):
 

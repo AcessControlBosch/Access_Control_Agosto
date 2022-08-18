@@ -27,21 +27,16 @@
                     
                    <div class="line-question" v-for="(question, id) in allQuestions" :key="id">
 
-                        <input type="checkbox" class="checkbox" v-bind:value="idQuestion[id]" v-model="valueCheckBox"/>
+                        <input type="checkbox" class="checkbox" v-bind:value="idQuestion[id]" v-model="valueCheckBox" v-bind:id="idQuestion[id] - 1"/>
                         <label class="p-question" for="um">{{idQuestion[id]}} - {{question.question}}</label>
                         
                     </div>
                     
                 </div>
-                <div>
-                    <ul>
-                        <li v-for="(category,id) in valueCheckBox" :key="id">{{category}}</li>
-                    </ul>
-                </div>
-
+               
                 <div class="align-items-center">
             
-                    <button class="btn btn-sucess" v-on:click="showModal()">Finalizar</button>
+                    <button class="btn btn-sucess" v-on:click="verifyQuestions()">Finalizar</button>
                     <button class="btn btn-alert" v-on:click="$router.push('/screen_home')">Cancelar</button>
             
                 </div>
@@ -78,10 +73,12 @@ export default {
         }
     },
     created(){
-        console.log('this.$store.state.machine', this.$store.state.machine)
-        this.$axios.get(this.$store.state.BASE_URL + '/greenbooks/1/1').then((response) => {
-            console.log('oi created')
 
+        console.log("Não marcadas: segurança: " + this.$store.state.qNotMarkedSecurity)
+
+        this.$axios.get(this.$store.state.BASE_URL + '/greenbooks/1/1').then((response) => {
+
+            console.log('oi created')
 
             this.allQuestions = response.data;
 
@@ -105,9 +102,40 @@ export default {
 
     },
     methods:{
+
         showModal(intTest){
             this.showDialogV = true;
+        },
+
+        verifyQuestions: function(){
+
+            let qNotMarked  = [];
+            let increment = 0;
+
+            for(increment; increment < this.allQuestions.length; increment++){
+
+                var checkedValue = document.getElementById(increment).checked;
+
+                if(checkedValue == false){
+                    qNotMarked.push(increment + 1);
+                }
+
+            }
+
+            this.$store.dispatch("SET_QNOTMARKEDENVIROMENT", qNotMarked);
+
+            if(this.$store.state.qNotMarkedEnviroment.length > 0){
+
+                //modal ou página
+            
+            } else {
+
+                //modal máquina liberada
+
+            }
+
         }
+
     }
 }
 </script>

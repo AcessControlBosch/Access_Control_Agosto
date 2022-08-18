@@ -14,14 +14,17 @@
             <p class="messageModalcss">A máquina está em conformidade.</p>
             <i  class="pi pi-lock-open"></i>
         </Dialog>
-        </div>
+    
+    </div>
 
 </template>
 
 
 <script>
 export default {
+    
     name: 'ModalReleased',
+
     data() {
         return {
             showDialogV: true,

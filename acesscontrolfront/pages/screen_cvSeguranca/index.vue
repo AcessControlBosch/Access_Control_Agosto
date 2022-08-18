@@ -23,17 +23,7 @@
                 </div> 
 
                 <div class="formulario">
-                    
-                    <!-- <div class="line-question">
 
-                        <input type="checkbox" class="checkbox" id="um"/>
-                        <label class="p-question" for="um">1 - Proteções</label>
-                        
-
-                    </div> -->
-
-                    
-                    
                     <div class="line-question" v-for="(question, id) in allQuestions" :key="id">
 
                         <input type="checkbox" class="checkbox" v-bind:value="id" v-model="valueCheckBox" v-bind:id="idQuestion[id] - 1"/>
@@ -42,7 +32,6 @@
                     </div>
                 </div>
 
-                
 
                 <div class="align-items-center">
             
@@ -53,6 +42,12 @@
             
             </div>
 
+        </div>
+
+        <div v-if="showModal">
+        
+            <ModalOrdemChamadoSeguranca />
+        
         </div>
     
     </div>
@@ -72,10 +67,12 @@ export default {
             allQuestions: [],
             responseQuestions: [],
             valueCheckBox: [],
-            idQuestion:[]    
+            idQuestion:[],
+            showModal: false,    
         }
 
     },
+
     created(){
 
         this.$axios.get(this.$store.state.BASE_URL + '/greenbooks/1/2').then((response) => {
@@ -107,6 +104,12 @@ export default {
 
     methods: {
 
+        showModalBar: function(){
+
+            this.showModal = true;
+
+        },
+
         verifyQuestions: function(){
 
             console.log(this.$store.state.machine)
@@ -124,10 +127,19 @@ export default {
 
             }
 
-            alert(qNotMarked)
+            this.$store.dispatch("SET_QNOTMARKEDSECURITY", qNotMarked);
+
+            if(this.$store.state.qNotMarkedSecurity.length > 0){
+
+                this.showModalBar();
+            
+            } else {
+
+                this.$router.push('/screen_cvMeioAmbiente');
+
+            }
 
         }
-
 
     },
 

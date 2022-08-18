@@ -29,5 +29,15 @@ export default {
         console.log("IDMACHINE:" + payload);
         context.commit("IDMACHINE", payload);
     },
+
+    SET_MODALSECURITY(context, payload){
+        console.log("MODAL_SECURITY:" + payload);
+        context.commit("MODALSECURITY", payload);
+    },
+
+    SET_MODALENVORIMENT(context, payload){
+        console.log("MODAL_ENVIROMENT:" + payload);
+        context.commit("MODALENVIROMENT", payload);
+    },
     
 }

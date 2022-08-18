@@ -23,6 +23,14 @@ export default {
     },
     IDMACHINE(state, payload){
         state.idmachine = payload;
+    },
+
+    MODALSECURITY(state, payload){
+        state.modalSecurity = payload;
+    },
+    
+    MODALENVIROMENT(state, payload){
+        state.modalEnviroment = payload;
     }
 
 }
